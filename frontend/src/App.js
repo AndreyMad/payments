@@ -3,11 +3,11 @@ import './App.css';
 import { io } from "socket.io-client";
 
 
-function App() {
-
+function App({match}) {
+console.log('%cApp.js line:7 location.url', 'color: #007acc;', match);
 const socket = io("http://localhost:80", {
   path:"/payments",
-  query:{x:222}
+  query:{x:221231231232}
 });
 
 socket.on('message', function(data){console.log(data)});

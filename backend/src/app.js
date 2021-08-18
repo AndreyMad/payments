@@ -12,27 +12,18 @@ const config = require("../config");
 
 
 const httpServer = http.createServer(app);
+
 const io = require('socket.io')(httpServer, {
   cors: {
     origin: "http://localhost:3000",
     methods: ["GET", "POST"]
   },
-    path:"/payments"
+    path:"/payments/"
 
 });
-
 //  {path: "http://localhost:80/payments"}
 
-io.on('connection', function(socket) {
-  console.log(socket.id);
-  setTimeout(function() {
-    socket.send(socket.id);
- }, 1000);
-  //Whenever someone disconnects this piece of code executed
-  socket.on('disconnect', function () {
-     console.log('A user disconnected');
-  });
-});
+
 
 
 function startServer() {
@@ -41,7 +32,8 @@ function startServer() {
   // app.use(express.static(path.join(__dirname, "../../mypage-front/build")));
 
 
-
+  require('./Payments/Payments')(io)
+  
 
 
   httpServer.listen(80, () => {
@@ -57,5 +49,4 @@ function startServer() {
 
 
 module.exports = startServer;
-
 
