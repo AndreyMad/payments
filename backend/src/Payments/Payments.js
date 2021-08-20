@@ -4,7 +4,7 @@ const io = (io)=>{
         // console.log(socket.handshake.query);
         setTimeout(function() {
             console.log('user connected');
-          socket.send(socket.id);
+            socket.send(socket.id);
        }, 1000);
         //Whenever someone disconnects this piece of code executed
         socket.on('disconnect', function () {

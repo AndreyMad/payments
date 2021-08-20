@@ -1,0 +1,30 @@
+.wrapper{
+    display: block;
+    height: 100%;
+    background-color: rgb(226, 226, 226);
+    padding: 10px;
+}
+.formContainer{
+    margin: 250px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 30px;
+    width: 350px;
+    height:450px;
+    padding:40px;
+}
+.formContainer>p{
+    font-size: 40px;
+}
+.input{
+    width: 80%;
+    margin-bottom: 15px;
+}
+.formContainer>.submitBtn{
+    margin-top: 80px;
+    width: 180px;
+    height: 50px;
+    font-size: 22px;
+}
