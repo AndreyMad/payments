@@ -7,11 +7,11 @@ import {
 } from "react-notifications";
 import "./App.module.css";
 import { io } from "socket.io-client";
-
+import Header from './Header/Header'
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import  routes from "../routes/routes";
 // import Header from "./Header/Header";
-// import * as Selectors from "../redux/Selectors";
+import * as Selectors from "../redux/Selectors";
 // import Loader from "../components/Loader/Loader";
 // import * as authOperations from "../redux/Auth/authOperations";
 
@@ -61,10 +61,11 @@ class App extends Component {
   }
 
   render() {
-    const { isLoading } = this.props;
+    const { isLoading, isAuth } = this.props;
     return (
       <>
         {/* {isLoading ? <Loader /> : null} */}
+        {isAuth?<Header/>:null}
         <NotificationContainer></NotificationContainer>
  
         <Switch>
@@ -73,11 +74,11 @@ class App extends Component {
             path={routes.MAIN_PAGE.path}
             component={routes.MAIN_PAGE.component}
           />
-          {/* <ProtectedRoute
-            path={routes.PROFILES_PAGE.path}
-            component={routes.PROFILES_PAGE.component}
+         <ProtectedRoute
+            path={routes.STAT_PAGE.path}
+            component={routes.STAT_PAGE.component}
           />
-          <ProtectedRoute
+           {/* <ProtectedRoute
             path={routes.DASHBOARD_PAGE.path}
             component={routes.DASHBOARD_PAGE.component}
           />
@@ -95,12 +96,17 @@ class App extends Component {
             to={routes.AUTH_PAGE.path}
             component={routes.AUTH_PAGE.component}
           /> 
-          <Redirect to={routes.AUTH_PAGE.path}/>
+          <Redirect to={routes.MAIN_PAGE.path}/>
         </Switch>
       </>
     );
   }
 }
+
+ const mSTP = (store) => ({
+  isAuth: Selectors.getIsAuth(store)
+
+ })
 // const mSTP = (store) => ({
 //   isLoading: Selectors.getIsLoading(store),
 //   error: Selectors.getError(store),
@@ -111,5 +117,5 @@ class App extends Component {
 //   refresh: () => dispatch(authOperations.refresh()),
 // });
 
-// export default connect(mSTP, mDTP)(App);
-export default App;
+ export default connect(mSTP, null)(App);
+// export default App;

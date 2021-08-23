@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { DataGrid } from '@material-ui/data-grid';
-
+import Header from '../../Components/Header/Header'
+import style from './MainPage.module.css'
 
 export default class MainPage extends Component {
     render() {
         return (
-            <div>
-                main page
+            <div className={style.container}>
+            
+           main page
             </div>
         )
     }

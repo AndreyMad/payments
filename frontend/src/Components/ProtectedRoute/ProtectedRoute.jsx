@@ -3,10 +3,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
-// import * as Selectors from '../../redux/Selectors';
+import * as Selectors from '../../redux/Selectors';
 import routes from '../../routes/routes';
 
 const ProtectedRoute = ({ component: Component, isAuth, ...restProps }) => (
+ 
   <Route
     {...restProps}
     render={props =>
@@ -24,9 +25,9 @@ const ProtectedRoute = ({ component: Component, isAuth, ...restProps }) => (
   />
 );
 
-// const mapStateToProps = store => ({
-//   isAuth: Selectors.getIsAuth(store),
-// });
+const mapStateToProps = store => ({
+  isAuth: Selectors.getIsAuth(store),
+});
 
-export default ProtectedRoute;
-// export default connect(mapStateToProps)(ProtectedRoute);
+// export default ProtectedRoute;
+export default connect(mapStateToProps)(ProtectedRoute);

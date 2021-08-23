@@ -1,0 +1,35 @@
+.navList{
+    list-style: none;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.listItem{
+    text-decoration: none;
+    font-size: 28px;
+    margin-right: 40px;
+    color:#000;
+}
+.listItem>a{
+    text-decoration: none;
+}
+.navList>.navLinkActive>a,.navLinkActive{
+ 
+    text-decoration: underline !important;
+}
+
+.listItem:last-of-type{
+    margin-left: auto;
+}
+.listItem:last-of-type>button{
+    font-size: 28px;
+    border:none;
+    background-color: inherit;
+    transition: 200ms;
+}
+.listItem:last-of-type>button:hover{
+    cursor: pointer;
+    color: rgb(233, 128, 128);
+    transition: 200ms;
+
+}
