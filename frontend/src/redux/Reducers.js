@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import types from "./Types";
 
 
-const token = (state = null, { type, payload }) => {
+const token = (state = 'newtoken', { type, payload }) => {
   switch (type) {
     case types.LOGIN_SUCCESS:
       return payload.data.token;
@@ -80,7 +80,18 @@ const isAuth = (state = true, { type }) => {
       return state;
   }
 };
+const notesReducer =(state=[], {type,payload})=>{
 
+switch (type) {
+  case types.GET_NOTES_SUCCES:
+    return payload.notes
+
+
+    default:
+      return state
+}
+
+}
 // const usersReducer = (state = [], { type, payload }) => {
 //   switch (type) {
 //     case types.GET_USERS_SUCCESS:
@@ -180,6 +191,6 @@ export default combineReducers({
   error,
   isLoading,
   isAuth,
-//   users: usersReducer,
+  notes: notesReducer,
 //   notification: notificationReducer,
 });

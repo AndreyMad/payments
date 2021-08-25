@@ -1,8 +1,15 @@
 import React, { Component } from 'react'
-import Header from '../../Components/Header/Header'
+import { connect } from "react-redux";
+import * as notesOperations from '../../redux/Notes/NotesOperations'
 import style from './MainPage.module.css'
+import * as API from '../../api/api' 
 
-export default class MainPage extends Component {
+class MainPage extends Component {
+    componentDidMount() {
+       const {getNotes}=this.props;
+       getNotes('adfasfd') 
+    }
+    
     render() {
         return (
             <div className={style.container}>
@@ -12,3 +19,7 @@ export default class MainPage extends Component {
         )
     }
 }
+const mDTP =(dispatch) => ({
+    getNotes: (token) => dispatch(notesOperations.getNotes(token)),
+  });
+export default connect(null, mDTP)(MainPage);

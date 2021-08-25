@@ -1,6 +1,7 @@
 const db = require('../db/paymentsDbContorller')
 
 const getNotes = async (req,res)=>{
+      // req.headers.token
     const dbResponse = await db.getNotesFromDb()
     if(dbResponse.error){
       return  res.status(502).send({error:'Something went wrong'})

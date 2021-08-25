@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const ip = "http://locallhost:3000/payments/api";
+const ip = "http://localhost:80/payments/api";
 
 
 
 
 
-export const getNotes = ()=>{
-    return axios.get(`${ip}/getnotes`)
+export const getNotes = (token)=>{
+    return axios.get(`${ip}/getnotes`, {headers:{token}})
 }
 
 export const createUser = (user) => {
