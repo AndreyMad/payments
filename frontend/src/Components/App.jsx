@@ -69,7 +69,7 @@ class App extends Component {
         <NotificationContainer></NotificationContainer>
  
         <Switch>
-          <Route
+          <ProtectedRoute
             exact
             path={routes.MAIN_PAGE.path}
             component={routes.MAIN_PAGE.component}
@@ -78,10 +78,11 @@ class App extends Component {
             path={routes.STAT_PAGE.path}
             component={routes.STAT_PAGE.component}
           />
-           {/* <ProtectedRoute
-            path={routes.DASHBOARD_PAGE.path}
-            component={routes.DASHBOARD_PAGE.component}
+           <ProtectedRoute
+            path={routes.USERS_PAGE.path}
+            component={routes.USERS_PAGE.component}
           />
+          {/*
           <ProtectedRoute
             exact
             path={routes.USERS_PAGE.path}

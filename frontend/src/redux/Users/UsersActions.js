@@ -1,0 +1,38 @@
+import types from "../Types";
+
+export const getUsersStart = (token) => ({
+  type: types.GET_USERS_START,
+  payload: { token },
+});
+
+export const getUsersSuccess = (users) => ({
+    type: types.GET_USERS_SUCCESS,
+    payload: {
+      users,
+    },
+  });
+  export const getUsersError = (error) => ({
+    type: types.GET_USERS_ERROR,
+    payload: {
+      error,
+    },
+  });
+  export const createUserStart =(token, user)=>({
+    type: types.CREATE_USER_START,
+    payload:{
+      token,user
+    }
+  })
+
+  export const createUserSucces =(user)=>({
+    type: types.CREATE_USER_SUCCES,
+    payload:{
+     user
+    }
+  })
+  export const createUserError =(error)=>({
+    type: types.CREATE_USER_ERROR,
+    payload:{
+     error
+    }
+  })

@@ -14,7 +14,7 @@ class MainPage extends Component {
         return (
             <div className={style.container}>
             
-           main page
+          <h1>MAIN PAGE</h1>
             </div>
         )
     }

@@ -1,11 +1,13 @@
 const { Router } = require("express");
 const {
-getNotes
+getNotes,getUsers,createUser
 } = require("./paymentsController");
 
 
 const router = Router();
 
 router.get("/api/getnotes", getNotes)
+router.get("/api/getusers", getUsers)
+router.post("/api/createuser", createUser)
 
 module.exports = router;

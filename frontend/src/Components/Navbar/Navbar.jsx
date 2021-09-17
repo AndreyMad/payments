@@ -8,13 +8,30 @@ export default function Navbar() {
     <>
       <ul className={style.navList}>
         <li className={style.listItem}>
-          <NavLink activeClassName={style.navLinkActive} className={style.navLink} to={routes.MAIN_PAGE.path}>
+          <NavLink
+            activeClassName={style.navLinkActive}
+            className={style.navLink}
+            to={routes.MAIN_PAGE.path}
+          >
             Головна
           </NavLink>
         </li>
         <li className={style.listItem}>
-          <NavLink activeClassName={style.navLinkActive}className={style.navLink} to={routes.STAT_PAGE.path}>
+          <NavLink
+            activeClassName={style.navLinkActive}
+            className={style.navLink}
+            to={routes.STAT_PAGE.path}
+          >
             Статистика
+          </NavLink>
+        </li>
+        <li className={style.listItem}>
+          <NavLink
+            activeClassName={style.navLinkActive}
+            className={style.navLink}
+            to={routes.USERS_PAGE.path}
+          >
+           Управління користувачами
           </NavLink>
         </li>
         <li className={style.listItem}>
