@@ -6,8 +6,11 @@ import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import { connect } from "react-redux";
+import shortId from 'shortid'
 import * as Selectors from "../../redux/Selectors";
 import * as usersOperations from "../../redux/Users/UsersOperations";
+import * as NotificationsActions  from '../../redux/Notifications/NotificationsActions'
+
 class AddUserPage extends Component {
   state = {
     firstName: "",
@@ -20,6 +23,7 @@ class AddUserPage extends Component {
   componentDidMount() {
     const { getUsers } = this.props;
     getUsers();
+    
   }
 
   checkboxTogle = () => {
@@ -38,17 +42,36 @@ class AddUserPage extends Component {
     e.preventDefault();
     const { firstName, lastName, login, password, isAdmin } = this.state;
     const { createUser } = this.props;
+    if(firstName.length<3||lastName.length<3||login.length<3||password.length<3){
+      const {setNotif}=this.props
+      return setNotif({
+        type:"warning",
+        isVisible:true,
+        message: "Введено не повні дані"
+      })
+    }
     const user = {
       firstName,
       lastName,
       login,
       password,
       isAdmin,
+      id:shortId.generate()
+     
     };
     const token = "tokenasdfasdf";
     createUser(token, user);
   };
 
+  deleteUserHandler =(id)=>{
+    const {deleteUser}=this.props
+    const token = "tokenasdfasdf";
+
+    deleteUser(token, id)
+
+  }
+
+ 
   render() {
     const { firstName, lastName, login, password, isAdmin } = this.state;
     const { users } = this.props;
@@ -109,7 +132,7 @@ class AddUserPage extends Component {
             {users.map((user) => {
               return (
                 <li className={style.listItem} key={user.id}>
-                  <User user={user}></User>
+                  <User deleteUserHandler={this.deleteUserHandler} user={user}></User>
                 </li>
               );
             })}
@@ -124,8 +147,12 @@ const mDTP = (dispatch) => ({
   getUsers: (token) => dispatch(usersOperations.getUsers(token)),
   createUser: (token, user) =>
     dispatch(usersOperations.createUser(token, user)),
+  deleteUser: (token, userId)=>
+  dispatch(usersOperations.deleteUser(token, userId)),
+  setNotif: (notif)=>dispatch(NotificationsActions.setNotification(notif))
 });
 const mSTP = (store) => ({
   users: Selectors.getUsers(store),
+  // notifications: Selectors.getNotification(store)
 });
 export default connect(mSTP, mDTP)(AddUserPage);

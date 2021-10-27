@@ -30,10 +30,47 @@ const getUsersFromDb = () => {
     });
 };
 
- const createUser = (user) => {
+const createUser = (user) => {
   return queryHandler(
-    `insert into paymentsusers (id, firstname, lastname, login, password, isadmin) VALUES ('${user.id}', '${user.firstName}', '${user.lastName}', '${user.login}', '${user.password}', '${user.isAdmin}')`
-  ).then(res=>console.log(res))
+    `insert into paymentsusers (id, firstname, lastname, login, password, isadmin)
+     VALUES ('${user.id}', '${user.firstName}', '${user.lastName}', '${user.login}', '${user.password}', '${user.isAdmin}') returning *`
+  )
+    .then((res) => {
+      return res.rows[0];
+    })
+    .catch((err) => {
+      return { error: err };
+    });
 };
-module.exports = { getNotesFromDb, getUsersFromDb, checkSession, createUser };
- 
+
+const deleteUser = (id) => {
+  return queryHandler(`
+  delete from paymentsusers where id = '${id}' returning id
+  `)
+    .then((res) => {
+      if (!res.rows[0]) {
+        return { error: "user not deleted" };
+      }
+      return res.rows[0];
+    })
+    .catch((err) => {
+      return { error: err };
+    });
+};
+
+const findUserFromDb = (userLogin) => {
+  return queryHandler(
+    `SELECT * FROM paymentsusers where login='${userLogin}'`
+  ).then((res) => {
+    return res.rows[0];
+  });
+};
+
+module.exports = {
+  getNotesFromDb,
+  getUsersFromDb,
+  checkSession,
+  createUser,
+  deleteUser,
+  findUserFromDb
+};

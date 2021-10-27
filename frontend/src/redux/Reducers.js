@@ -50,7 +50,7 @@ const isLoading = (state = false, { type }) => {
     case types.LOGOUT_ERROR:
     case types.REFRESH_SUCCESS:
     case types.REFRESH_ERROR:
-    case types.CREATE_USER_SUCCES:
+    case types.CREATE_USER_SUCCESS:
     case types.CREATE_USER_ERROR:
       return false;
 
@@ -91,8 +91,8 @@ const usersReducer = (state = [], { type, payload }) => {
     case types.GET_USERS_SUCCESS:
       return payload.users;
 
-    case types.CREATE_USERS_SUCCESS:
-      return [...state, payload.users];
+    case types.CREATE_USER_SUCCESS:
+      return [...state, payload.user];
 
     // case types.UPDATE_USERS_SUCCESS:
     //   return [
@@ -112,9 +112,8 @@ const usersReducer = (state = [], { type, payload }) => {
       ];
 
     case types.GET_USERS_ERROR:
-    case types.CREATE_USERS_ERROR:
-    case types.UPDATE_USERS_ERROR:
-    case types.DELETE_USERS_ERROR:
+    case types.CREATE_USER_ERROR:
+    case types.DELETE_USER_ERROR:
       return state;
 
     default:
@@ -122,45 +121,63 @@ const usersReducer = (state = [], { type, payload }) => {
   }
 };
 
-// const notificationReducerInitialState = {
-//   isVisible: false,
-//   type: "",
-//   message: "",
-// };
-// const notificationReducer = (
-//   state = notificationReducerInitialState,
-//   { type, payload }
-// ) => {
-//   switch (type) {
-//     case types.LOGIN_START:
-//     case types.LOGOUT_START:
-//     case types.REFRESH_START:
+const notificationReducerInitialState = {
+  isVisible: false,
+  type: "",
+  message: "",
+};
+const notificationReducer = (
+  state = notificationReducerInitialState,
+  { type, payload }
+) => {
+  switch (type) {
+    case types.LOGIN_START:
+    case types.LOGOUT_START:
+    case types.REFRESH_START:
+      return state;
 
-//       return state;
+    case types.CREATE_USER_SUCCESS:
+      return {
+        isVisible: true,
+        type: "success",
+        message: `Користувач ${payload?.user?.login} доданий`,
+      };
 
-//     case types.LOGIN_SUCCESS:
-//       return {
-//         isVisible: true,
-//         type: "success",
-//         message: `Hello ${payload?.data?.user?.name}!!!`,
-//       };
+    case types.DELETE_USER_SUCCESS:
+      return {
+        isVisible: true,
+        type: "success",
+        message: `Користувача видалено`,
+      };
 
-//     case types.LOGOUT_SUCCESS:
-//       return { isVisible: true, type: "warning", message: "See you!!!" };
+    case types.SET_NOTIFICATION:
+      return { ...payload };
 
-//     case types.LOGIN_ERROR:
-//     case types.LOGOUT_ERROR:
-//     case types.REFRESH_ERROR:
-//       return {
-//         status: "error",
-//         type: "error",
-//         message: payload.error || "NO MESSAGE",
-//       };
+    // case types.LOGIN_SUCCESS:
+    //   return {
+    //     isVisible: true,
+    //     type: "success",
+    //     message: `Hello ${payload?.data?.user?.name}!!!`,
+    //   };
 
-//     default:
-//       return null;
-//   }
-// };
+    // case types.LOGOUT_SUCCESS:
+    //   return { isVisible: true, type: "warning", message: "See you!!!" };
+
+    case types.LOGIN_ERROR:
+    case types.LOGOUT_ERROR:
+    case types.REFRESH_ERROR:
+    case types.DELETE_USER_ERROR:
+    case types.CREATE_USER_ERROR:
+      return {
+        status: "error",
+        type: "error",
+        message: payload.error || "NO MESSAGE",
+      };
+
+    default:
+      return state;
+  }
+};
 export default combineReducers({
   token,
   error,
@@ -168,5 +185,5 @@ export default combineReducers({
   isAuth,
   notes: notesReducer,
   users: usersReducer,
-  //   notification: notificationReducer,
+  notification: notificationReducer,
 });

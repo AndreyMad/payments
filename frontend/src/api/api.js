@@ -13,11 +13,11 @@ export const getUsers = (token)=>{
 }
 
 export const createUser = ( token, user) => {
-  console.log(token)
-  console.log(user)
+
     return axios.post(`${ip}/createuser`, {headers:{token}, user });
   };
 
   export const deleteUser = (token, userId) => {
-    return axios.post(`${ip}/itop/api/createuser`, {headers:{token},userId });
+    // console.log(userId)
+    return axios.post(`${ip}/deleteuser`, {headers:{token},userId });
   };

@@ -5,6 +5,8 @@ import {
   NotificationContainer,
   NotificationManager,
 } from "react-notifications";
+import 'react-notifications/lib/notifications.css';
+
 import "./App.module.css";
 import { io } from "socket.io-client";
 import Header from './Header/Header'
@@ -29,24 +31,28 @@ class App extends Component {
   //   const { refresh } = this.props;
   //   refresh();
   // }
+
   componentDidUpdate(prevProps) {
     if (prevProps.notifications !== this.props.notifications) {
       const { notifications } = this.props;
       if (!!notifications) {
         switch (notifications.type) {
           case "warning":
+            console.log("warning")
             return NotificationManager.warning(
               `${notifications.message}`,
               "",
               2000
             );
           case "success":
+            console.log("success")
             return NotificationManager.success(
               `${notifications.message}`,
               "",
               2000
             );
           case "error":
+            console.log("error")
             return NotificationManager.error(
               `${notifications.message}`,
               "",
@@ -104,19 +110,17 @@ class App extends Component {
   }
 }
 
- const mSTP = (store) => ({
-  isAuth: Selectors.getIsAuth(store)
 
- })
-// const mSTP = (store) => ({
-//   isLoading: Selectors.getIsLoading(store),
-//   error: Selectors.getError(store),
-//   notifications: Selectors.getNotification(store),
-// });
+const mSTP = (store) => ({
+  // isLoading: Selectors.getIsLoading(store),
+  // error: Selectors.getError(store),
+  isAuth: Selectors.getIsAuth(store),
+  notifications: Selectors.getNotification(store),
+});
 
 // const mDTP = (dispatch) => ({
 //   refresh: () => dispatch(authOperations.refresh()),
 // });
 
  export default connect(mSTP, null)(App);
-// export default App;
+

@@ -3,7 +3,7 @@ import style from "./User.module.css";
 import Button from "@material-ui/core/Button";
 
 
-export default function User({ user }) {
+export default function User({ user,deleteUserHandler }) {
   return (
     <div className={style.wrapper}>
       <span>{user.firstName}</span>
@@ -13,6 +13,7 @@ export default function User({ user }) {
       <Button
         variant="contained"
         color="secondary"
+        onClick={()=>deleteUserHandler(user.id)}
       >
         Видалити
       </Button>
