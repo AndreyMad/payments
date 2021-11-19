@@ -21,3 +21,8 @@ export const createUser = ( token, user) => {
     // console.log(userId)
     return axios.post(`${ip}/deleteuser`, {headers:{token},userId });
   };
+
+  export const paymentAuthorization =(user)=>{
+    
+     return axios.post(`${ip}/auth`, {user})
+  }

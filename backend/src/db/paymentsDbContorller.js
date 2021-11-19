@@ -62,9 +62,15 @@ const findUserFromDb = (userLogin) => {
   return queryHandler(
     `SELECT * FROM paymentsusers where login='${userLogin}'`
   ).then((res) => {
-    return res.rows[0];
+     return res.rows[0];
   });
 };
+
+const pushTokenToDb =(id, token)=>{
+  return queryHandler(`UPDATE paymentsusers SET sessiontoken = '${token}' WHERE id = '${id}';`).then(res=>res.rowCount)
+}
+
+
 
 module.exports = {
   getNotesFromDb,
@@ -72,5 +78,6 @@ module.exports = {
   checkSession,
   createUser,
   deleteUser,
-  findUserFromDb
+  findUserFromDb,
+  pushTokenToDb
 };

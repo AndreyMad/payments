@@ -1,6 +1,11 @@
 const db = require("../db/paymentsDbContorller");
 const bcrypt = require('bcrypt');
+var jwt = require('jsonwebtoken');
 const saltRounds =12;
+
+
+
+
 const getNotes = async (req, res) => {
   // req.headers.token
   const dbResponse = await db.getNotesFromDb();
@@ -70,7 +75,8 @@ const deleteUser =async(req,res)=>{
 //auth
 const authorization = async (req, res) => {
   const user = req.body.user;
-  const userFromDB = await db.findUserFromDb(user.login.toLowerCase());
+  const userFromDB = await db.findUserFromDb(user.userLogin.toLowerCase()) 
+   console.log(userFromDB)
   if (!userFromDB) {
     return res
       .status(200)
@@ -87,26 +93,27 @@ const authorization = async (req, res) => {
   }
 
   const session = await createSession(userFromDB);
-  if (session.status === "SUCCES") {
-    return res.status(200).send({
-      token: session.token,
-      status: "SUCCES",
-      user: {
-        name: userFromDB.username,
-        isAdmin: userFromDB.isadmin,
-        email: userFromDB.email,
-      },
-    });
-  }
+  // if (session.status === "SUCCES") {
+  //   return res.status(200).send({
+  //     token: session.token,
+  //     status: "SUCCES",
+  //     user: {
+  //       name: userFromDB.username,
+  //       isAdmin: userFromDB.isadmin,
+  //       email: userFromDB.email,
+  //     },
+  //   });
+  // }
 };
 
 const createSession = async (user) => {
-  const token = jwt.sign(user.id, config.secret);
+  const token = jwt.sign(user.id, '317355');
   const time = new Date();
   const tokenExpiredTime = time.setDate(time.getDate() + 30);
   const tokenWithExpiredTime = tokenExpiredTime + "." + token;
-  const dbResp = await db.pushTokenToDb(user.email, tokenWithExpiredTime);
+  const dbResp = await db.pushTokenToDb(user.id, tokenWithExpiredTime);
+  console.log(dbResp)
   return dbResp;
 };
 
-module.exports = { getNotes, getUsers,createUser, deleteUser };
+module.exports = { getNotes, getUsers,createUser, deleteUser, authorization };

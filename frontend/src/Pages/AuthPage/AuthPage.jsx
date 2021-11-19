@@ -3,10 +3,12 @@ import style from "./AuthPage.module.css";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import * as authOperations from '../../redux/Auth/authOperations'
+import { connect } from "react-redux";
 
-export default class AuthPage extends Component {
+class AuthPage extends Component {
   state = {
-    userName: "",
+    userLogin: "",
     password: "",
   };
 
@@ -16,18 +18,25 @@ export default class AuthPage extends Component {
     });
   };
 
+
+handleSubmit =()=>{
+  const {userLogin, password}=this.state
+  const {login}=this.props
+  login({userLogin, password})
+}
   render() {
-    const { userName, password } = this.state;
+    const { userLogin, password } = this.state;
+    
     return (
       <section className={style.wrapper}>
-        <form className={style.formContainer}>
+        <form className={style.formContainer} onSubmit={this.handleSubmit}>
           <p>Авторизація</p>
           <TextField
-            id="userName"
+            id="userLogin"
             label="Логин"
             onChange={this.handleChange}
             className={style.input}
-            value={userName}
+            value={userLogin}
           ></TextField>
           <TextField
             type="password"
@@ -38,6 +47,7 @@ export default class AuthPage extends Component {
             value={password}
           ></TextField>
           <Button
+          onClick={this.handleSubmit}
             variant="contained"
             color="primary"
             className={style.submitBtn}
@@ -49,3 +59,9 @@ export default class AuthPage extends Component {
     );
   }
 }
+
+const mDTP = (dispatch)=>({
+  login:(user)=>dispatch(authOperations.login(user))
+})
+
+export default connect(null, mDTP)(AuthPage);
